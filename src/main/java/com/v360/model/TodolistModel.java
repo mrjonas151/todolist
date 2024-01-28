@@ -4,7 +4,7 @@ import java.util.List;
 
 public class TodolistModel {
     private int listId;
-    private int userId;
+    private String userId;
     private String listName;
     private List<String> items;
 
@@ -16,11 +16,11 @@ public class TodolistModel {
         this.listId = listId;
     }
 
-    public int getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
