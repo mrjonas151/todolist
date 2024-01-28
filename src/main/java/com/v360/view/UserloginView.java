@@ -3,6 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.v360.view;
+import com.v360.controller.UserController;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -50,6 +52,11 @@ public class UserloginView extends javax.swing.JFrame {
         jButton2.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
         jButton2.setForeground(new java.awt.Color(0, 0, 139));
         jButton2.setText("Criar conta");
+        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton2MouseClicked(evt);
+            }
+        });
 
         txtEmail.setBackground(new java.awt.Color(254, 254, 254));
         txtEmail.setForeground(new java.awt.Color(0, 0, 139));
@@ -61,6 +68,11 @@ public class UserloginView extends javax.swing.JFrame {
         jButton1.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
         jButton1.setForeground(new java.awt.Color(0, 0, 139));
         jButton1.setText("Entrar");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/todolist2-removebg-preview.png"))); // NOI18N
 
@@ -125,6 +137,22 @@ public class UserloginView extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
+        this.setVisible(false);
+        new UsercadastroView().setVisible(true);
+    }//GEN-LAST:event_jButton2MouseClicked
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+       boolean login = UserController.logarUsuario(txtEmail.getText(), txtSenha.getText());
+       
+       if(login){
+           this.setVisible(false);
+           new TodolistView().setVisible(true);
+       }else{
+            JOptionPane.showMessageDialog(null, "Usuário e/ou senha inválidos. Tente novamente.");
+       }
+    }//GEN-LAST:event_jButton1MouseClicked
 
     /**
      * @param args the command line arguments

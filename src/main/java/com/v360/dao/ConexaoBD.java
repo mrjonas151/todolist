@@ -24,6 +24,9 @@ public class ConexaoBD {
     }
 
     public static Connection getConnection() {
+        if(conn==null){
+            conectaBD();
+        }
         return conn;
     }
 
@@ -39,7 +42,7 @@ public class ConexaoBD {
     }
 
     public static void conectaBD() {
-        String url = "jdbc:mysql://localhost:3306/";
+        String url = "jdbc:mysql://localhost:3306/todolist";
         String username = "root";
         String password = "password";
         try {
