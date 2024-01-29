@@ -12,6 +12,12 @@ import javax.swing.JOptionPane;
  */
 public class UserloginView extends javax.swing.JFrame {
 
+    public static String emailLogado = "";
+    
+    public static String getEmailLogado(){
+        return emailLogado;
+    }
+    
     /**
      * Creates new form UserloginView
      */
@@ -147,6 +153,7 @@ public class UserloginView extends javax.swing.JFrame {
        boolean login = UserController.logarUsuario(txtEmail.getText(), txtSenha.getText());
        
        if(login){
+           emailLogado = txtEmail.getText();
            this.setVisible(false);
            new TodolistView().setVisible(true);
        }else{

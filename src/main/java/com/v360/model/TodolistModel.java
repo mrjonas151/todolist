@@ -4,10 +4,19 @@ import java.util.List;
 
 public class TodolistModel {
     private int listId;
-    private String userId;
+    private String userEmail;
     private String listName;
-    private List<String> items;
+    private List<TarefaModel> items;
+    
 
+    public TodolistModel(String listName) {
+        this.listName = listName;
+    }
+    
+    public TodolistModel() {
+        this.listName = listName;
+    }
+    
     public int getListId() {
         return listId;
     }
@@ -16,12 +25,12 @@ public class TodolistModel {
         this.listId = listId;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getUserEmail() {
+        return userEmail;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
     }
 
     public String getListName() {
@@ -32,13 +41,11 @@ public class TodolistModel {
         this.listName = listName;
     }
 
-    public List<String> getItems() {
+    public List<TarefaModel> getItems() {
         return items;
     }
 
-    public void setItems(List<String> items) {
+    public void setItems(List<TarefaModel> items) {
         this.items = items;
     }
-    
-    
 }
