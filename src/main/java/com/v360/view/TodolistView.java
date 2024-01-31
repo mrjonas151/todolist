@@ -4,6 +4,10 @@
  */
 package com.v360.view;
 
+import com.v360.controller.TodolistController;
+import com.v360.dao.TodolistDAO;
+import com.v360.model.TarefaModel;
+import com.v360.model.TodolistModel;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
@@ -23,7 +27,7 @@ import javax.swing.SwingUtilities;
  */
 public final class TodolistView extends javax.swing.JFrame {
 
-    List tarefas = new ArrayList();
+    List<TodolistModel> tarefas = new ArrayList();
     private JPanel taskPanel, taskComponentPanel ,subTaskPanel, subTaskComponentPanel;
     
     /**
@@ -46,37 +50,6 @@ public final class TodolistView extends javax.swing.JFrame {
         addGuiComponents();
         initComponents();
     }
-    
-//    public void addGuiComponents(){
-//    // taskpanel
-//        taskPanel = new JPanel();
-//        subTaskPanel = new JPanel();
-//
-//        // taskcomponentpanel
-//        taskComponentPanel = new JPanel();
-//        taskComponentPanel.setLayout(new BoxLayout(taskComponentPanel, BoxLayout.Y_AXIS));
-//        taskPanel.add(taskComponentPanel);
-//        
-//        //subtask componentpanel
-//        subTaskComponentPanel = new JPanel();
-//        subTaskComponentPanel.setLayout(new BoxLayout(subTaskComponentPanel, BoxLayout.Y_AXIS));
-//        taskPanel.add(subTaskComponentPanel);
-//
-//        // add scrolling to the task panel
-//        JScrollPane scrollPane = new JScrollPane(taskPanel);
-//        scrollPane.setBounds(8, 70, CommonConstants.TASKPANEL_SIZE.width, CommonConstants.TASKPANEL_SIZE.height);
-//        scrollPane.setBorder(BorderFactory.createLoweredBevelBorder());
-//        scrollPane.setMaximumSize(CommonConstants.TASKPANEL_SIZE);
-//        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-//        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-//
-//        // changing the speed of the scroll bar
-//        JScrollBar verticalScrollBar = scrollPane.getVerticalScrollBar();
-//        verticalScrollBar.setUnitIncrement(20);
-//        
-//        this.getContentPane().add(scrollPane);
-//        //addTaskButton.addActionListener(this);
-//    }
     
     public void addGuiComponents() {
     // taskpanel
@@ -117,8 +90,6 @@ public final class TodolistView extends javax.swing.JFrame {
 }
 
 
-    
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -132,7 +103,7 @@ public final class TodolistView extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         btVoltar = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btAtualizarTarefas = new javax.swing.JButton();
         addTaskButton = new javax.swing.JButton();
         addSubTaskButton = new javax.swing.JButton();
 
@@ -163,10 +134,20 @@ public final class TodolistView extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setBackground(new java.awt.Color(247, 247, 247));
-        jButton2.setFont(new java.awt.Font("Ubuntu", 1, 24)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(0, 0, 139));
-        jButton2.setText("ATUALIZAR TAREFAS");
+        btAtualizarTarefas.setBackground(new java.awt.Color(247, 247, 247));
+        btAtualizarTarefas.setFont(new java.awt.Font("Ubuntu", 1, 24)); // NOI18N
+        btAtualizarTarefas.setForeground(new java.awt.Color(0, 0, 139));
+        btAtualizarTarefas.setText("ATUALIZAR TAREFAS");
+        btAtualizarTarefas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btAtualizarTarefasMouseClicked(evt);
+            }
+        });
+        btAtualizarTarefas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btAtualizarTarefasActionPerformed(evt);
+            }
+        });
 
         addTaskButton.setText("Add Task");
         addTaskButton.addActionListener(new java.awt.event.ActionListener() {
@@ -198,7 +179,7 @@ public final class TodolistView extends javax.swing.JFrame {
                 .addGap(48, 48, 48))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btAtualizarTarefas, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(addSubTaskButton)
                 .addGap(119, 119, 119))
@@ -219,7 +200,7 @@ public final class TodolistView extends javax.swing.JFrame {
                     .addComponent(addTaskButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 472, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btAtualizarTarefas, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(addSubTaskButton))
                 .addContainerGap())
         );
@@ -252,60 +233,115 @@ public final class TodolistView extends javax.swing.JFrame {
 
     private void addTaskButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTaskButtonActionPerformed
         // create a task component
-        TaskComponent taskComponent = new TaskComponent(taskComponentPanel);
-        taskComponentPanel.add(taskComponent);
-
-        // make the previous task appear disabled
-        if (taskComponentPanel.getComponentCount() > 1) {
-            TaskComponent previousTask = (TaskComponent) taskComponentPanel.getComponent(
-                    taskComponentPanel.getComponentCount() - 2);
-            previousTask.getTaskField().setBackground(null);
-        }
-
-        taskComponent.getTaskField().requestFocus();
-        repaint();
-        revalidate();
+//        TaskComponent taskComponent = new TaskComponent(taskComponentPanel);
+//        taskComponentPanel.add(taskComponent);
+//
+//        // make the previous task appear disabled
+//        if (taskComponentPanel.getComponentCount() > 1) {
+//            TaskComponent previousTask = (TaskComponent) taskComponentPanel.getComponent(
+//                    taskComponentPanel.getComponentCount() - 2);
+//            previousTask.getTaskField().setBackground(null);
+//        }
+//
+//        taskComponent.getTaskField().requestFocus();
+//        repaint();
+//        revalidate();
     }//GEN-LAST:event_addTaskButtonActionPerformed
 
     private void addSubTaskButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSubTaskButtonActionPerformed
-      //create a task component
-        SubTaskComponent subtaskComponent = new SubTaskComponent(subTaskComponentPanel);
-        subTaskComponentPanel.add(subtaskComponent);
-
-        // make the previous task appear disabled
-        if (subTaskComponentPanel.getComponentCount() > 1) {
-            SubTaskComponent previousTask = (SubTaskComponent) subTaskComponentPanel.getComponent(
-                    subTaskComponentPanel.getComponentCount() - 2);
-            previousTask.getSubTaskField().setBackground(null);
-        }
-        subtaskComponent.getSubTaskField().requestFocus();
-        repaint();
-        revalidate();
+//        //create a task component
+//        SubTaskComponent subtaskComponent = new SubTaskComponent(subTaskComponentPanel);
+//        subTaskComponentPanel.add(subtaskComponent);
+//
+//        // make the previous task appear disabled
+//        if (subTaskComponentPanel.getComponentCount() > 1) {
+//            SubTaskComponent previousTask = (SubTaskComponent) subTaskComponentPanel.getComponent(
+//                    subTaskComponentPanel.getComponentCount() - 2);
+//            previousTask.getSubTaskField().setBackground(null);
+//        }
+//        subtaskComponent.getSubTaskField().requestFocus();
+//        repaint();
+//        revalidate();
     }//GEN-LAST:event_addSubTaskButtonActionPerformed
 
-    public void actionPerformed(ActionEvent e) {
-        String command = e.getActionCommand();
-        if(command.equalsIgnoreCase("Add Task")){
-            // create a task component
-            TaskComponent taskComponent = new TaskComponent(taskComponentPanel);
-            taskComponentPanel.add(taskComponent);
+    private void exibirTarefas(List<TodolistModel> tarefas) {
+        taskComponentPanel.removeAll(); // Limpa todos os componentes existentes no painel
 
-            // make the previous task appear disabled
-            if(taskComponentPanel.getComponentCount() > 1){
-                TaskComponent previousTask = (TaskComponent) taskComponentPanel.getComponent(
-                        taskComponentPanel.getComponentCount() - 2);
-                previousTask.getTaskField().setBackground(null);
-            }
-        }else if(command.equalsIgnoreCase("Add Subtask")){
-            SubTaskComponent subtaskComponent = new SubTaskComponent(subTaskComponentPanel);
-            subTaskComponentPanel.add(subtaskComponent);
-            if(subTaskComponentPanel.getComponentCount() > 1){
-                SubTaskComponent previousTask = (SubTaskComponent) subTaskComponentPanel.getComponent(
-                        subTaskComponentPanel.getComponentCount() - 2);
-                previousTask.getSubTaskField().setBackground(null);
+        if (tarefas != null) {
+            for (TodolistModel tarefa : tarefas) {
+                String descricao = tarefa.getListName();
+                TaskComponent taskComponent = new TaskComponent(taskComponentPanel, descricao);
+                taskComponentPanel.add(taskComponent);
+
+                // Configura o texto do campo da tarefa com o nome da tarefa
+                //taskComponent.getTaskField().setText(tarefa.getListName());
+
+                // Recupera e exibe as subtarefas desta tarefa
+                List<TarefaModel> subtarefas = TodolistDAO.pesquisarSubTarefas(tarefa.getListId(), UserloginView.getEmailLogado());
+                if (subtarefas != null) {
+                    for (TarefaModel subtarefa : subtarefas) {
+                        String descricaoSub = subtarefa.getDescricao();
+                        SubTaskComponent subtaskComponent = new SubTaskComponent(subTaskComponentPanel, descricaoSub);
+                        subTaskComponentPanel.add(subtaskComponent);
+
+                        // Configura o texto do campo da subtarefa com a descrição da subtarefa
+                        //subtaskComponent.getSubTaskField().setText(subtarefa.getDescricao());
+                    }
+                }
             }
         }
+
+        repaint();
+        revalidate();
     }
+    
+    private void btAtualizarTarefasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btAtualizarTarefasMouseClicked
+        atualizarTarefas(UserloginView.getEmailLogado());
+        exibirTarefas(tarefas);
+    }//GEN-LAST:event_btAtualizarTarefasMouseClicked
+
+    private void btAtualizarTarefasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAtualizarTarefasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btAtualizarTarefasActionPerformed
+
+    
+//    public void actionPerformed(ActionEvent e) {
+//        String command = e.getActionCommand();
+//        if(command.equalsIgnoreCase("Add Task")){
+//            // create a task component
+//            TaskComponent taskComponent = new TaskComponent(taskComponentPanel);
+//            taskComponentPanel.add(taskComponent);
+//
+//            // make the previous task appear disabled
+//            if(taskComponentPanel.getComponentCount() > 1){
+//                TaskComponent previousTask = (TaskComponent) taskComponentPanel.getComponent(
+//                        taskComponentPanel.getComponentCount() - 2);
+//                previousTask.getTaskField().setBackground(null);
+//            }
+//        }else if(command.equalsIgnoreCase("Add Subtask")){
+//            SubTaskComponent subtaskComponent = new SubTaskComponent(subTaskComponentPanel);
+//            subTaskComponentPanel.add(subtaskComponent);
+//            if(subTaskComponentPanel.getComponentCount() > 1){
+//                SubTaskComponent previousTask = (SubTaskComponent) subTaskComponentPanel.getComponent(
+//                        subTaskComponentPanel.getComponentCount() - 2);
+//                previousTask.getSubTaskField().setBackground(null);
+//            }
+//        }
+//    }
+    
+    public void atualizarTarefas(String email){
+        tarefas = null;
+        tarefas = TodolistController.pesquisarListas(email);
+    }
+    
+    public void removerTarefa(int listId, String email){
+        //Fazer a logica aqui
+    }
+    
+    public void removerSubTarefa(int listId, int itemId, String email){
+        //fazer a logica aqui
+    }
+    
         
     /**
      * @param args the command line arguments
@@ -348,9 +384,9 @@ public final class TodolistView extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addSubTaskButton;
     private javax.swing.JButton addTaskButton;
+    private javax.swing.JButton btAtualizarTarefas;
     private javax.swing.JButton btVoltar;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables

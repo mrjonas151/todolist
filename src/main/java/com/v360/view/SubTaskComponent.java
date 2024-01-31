@@ -1,5 +1,6 @@
 package com.v360.view;
 
+import com.v360.controller.TodolistController;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -19,7 +20,7 @@ public class SubTaskComponent extends JPanel implements ActionListener {
     // this panel is used so that we can make updates to the task component panel when deleting tasks
     private JPanel parentPanel;
         
-        public SubTaskComponent(JPanel parentPanel){
+        public SubTaskComponent(JPanel parentPanel, String descricao){
         this.parentPanel = parentPanel;
 
         // subtask field
@@ -27,6 +28,7 @@ public class SubTaskComponent extends JPanel implements ActionListener {
         subtaskField.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         subtaskField.setPreferredSize(CommonConstants.SUBTASKFIELD_SIZE);
         subtaskField.setContentType("text/html");
+        subtaskField.setText(descricao);  
         subtaskField.addFocusListener(new FocusListener() {
             // indicate which task field is currently being edited
             @Override
@@ -73,11 +75,30 @@ public class SubTaskComponent extends JPanel implements ActionListener {
             subtaskField.setText(taskText);
         }
 
-        if(e.getActionCommand().equalsIgnoreCase("X")){
+        if (e.getActionCommand().equalsIgnoreCase("X")) {
+        String taskText = subtaskField.getText();
+
+        java.util.regex.Pattern pattern = java.util.regex.Pattern.compile("\\((\\d+)\\)\\((\\d+)\\)");
+        java.util.regex.Matcher matcher = pattern.matcher(taskText);
+
+        if (matcher.find()) {
+            String codigo1 = matcher.group(1);
+            String codigo2 = matcher.group(2);
+
+            int numero1 = Integer.parseInt(codigo1);
+            int numero2 = Integer.parseInt(codigo2);
+
+            System.out.println("Número 1: " + numero1);
+            System.out.println("Número 2: " + numero2);
+            
+            TodolistController.removerSubTarefa(numero1, numero2, UserloginView.getEmailLogado());
+
+        }
             // delete this component from the parent panel
             parentPanel.remove(this);
             parentPanel.repaint();
             parentPanel.revalidate();
         }
+
     }
 }

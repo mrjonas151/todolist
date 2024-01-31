@@ -1,5 +1,6 @@
 package com.v360.view;
 
+import com.v360.controller.TodolistController;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -20,7 +21,7 @@ public class TaskComponent extends JPanel implements ActionListener {
     // this panel is used so that we can make updates to the task component panel when deleting tasks
     private JPanel parentPanel;
 
-    public TaskComponent(JPanel parentPanel){
+    public TaskComponent(JPanel parentPanel, String descricao){
         this.parentPanel = parentPanel;
 
         // task field
@@ -28,6 +29,7 @@ public class TaskComponent extends JPanel implements ActionListener {
         taskField.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         taskField.setPreferredSize(CommonConstants.TASKFIELD_SIZE);
         taskField.setContentType("text/html");
+        taskField.setText(descricao);
         taskField.addFocusListener(new FocusListener() {
             // indicate which task field is currently being edited
             @Override
@@ -82,11 +84,23 @@ public class TaskComponent extends JPanel implements ActionListener {
             taskField.setText(taskText);
         }
 
-        if(e.getActionCommand().equalsIgnoreCase("X")){
-            // delete this component from the parent panel
+        if (e.getActionCommand().equalsIgnoreCase("X")) {
+            String taskText = taskField.getText();
+
+            java.util.regex.Pattern pattern = java.util.regex.Pattern.compile("\\((\\d+)\\)");
+            java.util.regex.Matcher matcher = pattern.matcher(taskText);
+
+            if (matcher.find()) {
+                String codigo = matcher.group(1);
+                int numero = Integer.parseInt(codigo);
+                System.out.println("Número: " + numero);
+                TodolistController.removerTarefa(numero, UserloginView.getEmailLogado());
+            }
+            
             parentPanel.remove(this);
             parentPanel.repaint();
             parentPanel.revalidate();
         }
+
     }
 }

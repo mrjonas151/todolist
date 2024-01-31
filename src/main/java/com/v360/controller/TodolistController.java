@@ -51,5 +51,13 @@ public class TodolistController {
 
         return subTarefas;
     }
+    
+    public static boolean removerTarefa(int listId, String email) {
+        return TodolistDAO.removerTarefa(listId, email);
+    }
+
+    public static boolean removerSubTarefa(int listId, int itemId, String email) {
+        return TodolistDAO.removerSubTarefa(listId, itemId, email); 
+    }
 
 }
