@@ -4,20 +4,81 @@
  */
 package com.v360.view;
 
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
+import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
+import javax.swing.SwingUtilities;
 
 /**
  *
  * @author jonas
  */
-public class TodolistView extends javax.swing.JFrame {
+public final class TodolistView extends javax.swing.JFrame {
 
+    List tarefas = new ArrayList();
+    private JPanel taskPanel, taskComponentPanel ,subTaskPanel, subTaskComponentPanel;
+    
     /**
      * Creates new form UsercadastroView
      */
     public TodolistView() {
+        super("Aplicacao to do list");
+        
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setPreferredSize(CommonConstants.GUI_SIZE);
+        pack();
+        setLocationRelativeTo(null);
+        setResizable(false);
+        setLayout(null);
+        
+        getContentPane().setBackground(new Color(137, 216, 230));
+
+        setLayout(null);
+
+        addGuiComponents();
         initComponents();
     }
+    
+    public void addGuiComponents(){
+    // taskpanel
+        taskPanel = new JPanel();
+        subTaskPanel = new JPanel();
+
+        // taskcomponentpanel
+        taskComponentPanel = new JPanel();
+        taskComponentPanel.setLayout(new BoxLayout(taskComponentPanel, BoxLayout.Y_AXIS));
+        taskPanel.add(taskComponentPanel);
+        
+        //subtask componentpanel
+        subTaskComponentPanel = new JPanel();
+        subTaskComponentPanel.setLayout(new BoxLayout(subTaskComponentPanel, BoxLayout.Y_AXIS));
+        subTaskPanel.add(subTaskComponentPanel);
+
+        // add scrolling to the task panel
+        JScrollPane scrollPane = new JScrollPane(taskPanel);
+        scrollPane.setBounds(8, 70, CommonConstants.TASKPANEL_SIZE.width, CommonConstants.TASKPANEL_SIZE.height);
+        scrollPane.setBorder(BorderFactory.createLoweredBevelBorder());
+        scrollPane.setMaximumSize(CommonConstants.TASKPANEL_SIZE);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+
+        // changing the speed of the scroll bar
+        JScrollBar verticalScrollBar = scrollPane.getVerticalScrollBar();
+        verticalScrollBar.setUnitIncrement(20);
+        
+        this.getContentPane().add(scrollPane);
+        //addTaskButton.addActionListener(this);
+    }
+
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -30,11 +91,11 @@ public class TodolistView extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         btVoltar = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        addTaskButton = new javax.swing.JButton();
+        addSubTaskButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -48,9 +109,6 @@ public class TodolistView extends javax.swing.JFrame {
                 jButton1MouseClicked(evt);
             }
         });
-
-        jLabel1.setForeground(new java.awt.Color(0, 0, 139));
-        jLabel1.setText("Pesquisar tasks");
 
         jLabel4.setFont(new java.awt.Font("Ubuntu", 3, 44)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 0, 139));
@@ -66,47 +124,65 @@ public class TodolistView extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("🔎P");
+        jButton2.setBackground(new java.awt.Color(247, 247, 247));
+        jButton2.setFont(new java.awt.Font("Ubuntu", 1, 24)); // NOI18N
+        jButton2.setForeground(new java.awt.Color(0, 0, 139));
+        jButton2.setText("ATUALIZAR TAREFAS");
+
+        addTaskButton.setText("Add Task");
+        addTaskButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addTaskButtonActionPerformed(evt);
+            }
+        });
+
+        addSubTaskButton.setText("Add Subtask");
+        addSubTaskButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addSubTaskButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(26, 26, 26)
+                .addGap(49, 49, 49)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addComponent(addTaskButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(58, 58, 58)
+                .addGap(18, 18, 18)
                 .addComponent(btVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28))
+                .addGap(48, 48, 48))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 394, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(40, Short.MAX_VALUE))
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(addSubTaskButton)
+                .addGap(119, 119, 119))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(32, 32, 32)
-                        .addComponent(btVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(85, 85, 85)
+                        .addContainerGap()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(3, 3, 3))))
+                    .addComponent(addTaskButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 472, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(397, Short.MAX_VALUE))
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(addSubTaskButton))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -135,6 +211,63 @@ public class TodolistView extends javax.swing.JFrame {
         new TaskcreateView().setVisible(true);
     }//GEN-LAST:event_jButton1MouseClicked
 
+    private void addTaskButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTaskButtonActionPerformed
+        // create a task component
+        TaskComponent taskComponent = new TaskComponent(taskComponentPanel);
+        taskComponentPanel.add(taskComponent);
+
+        // make the previous task appear disabled
+        if (taskComponentPanel.getComponentCount() > 1) {
+            TaskComponent previousTask = (TaskComponent) taskComponentPanel.getComponent(
+                    taskComponentPanel.getComponentCount() - 2);
+            previousTask.getTaskField().setBackground(null);
+        }
+
+        taskComponent.getTaskField().requestFocus();
+        repaint();
+        revalidate();
+    }//GEN-LAST:event_addTaskButtonActionPerformed
+
+    private void addSubTaskButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSubTaskButtonActionPerformed
+      //create a task component
+        SubTaskComponent subtaskComponent = new SubTaskComponent(subTaskComponentPanel);
+        subTaskComponentPanel.add(subtaskComponent);
+
+        // make the previous task appear disabled
+        if (subTaskComponentPanel.getComponentCount() > 1) {
+            SubTaskComponent previousTask = (SubTaskComponent) subTaskComponentPanel.getComponent(
+                    subTaskComponentPanel.getComponentCount() - 2);
+            previousTask.getSubTaskField().setBackground(null);
+        }
+        subtaskComponent.getSubTaskField().requestFocus();
+        repaint();
+        revalidate();
+    }//GEN-LAST:event_addSubTaskButtonActionPerformed
+
+    public void actionPerformed(ActionEvent e) {
+        String command = e.getActionCommand();
+        if(command.equalsIgnoreCase("Add Task")){
+            // create a task component
+            TaskComponent taskComponent = new TaskComponent(taskComponentPanel);
+            taskComponentPanel.add(taskComponent);
+
+            // make the previous task appear disabled
+            if(taskComponentPanel.getComponentCount() > 1){
+                TaskComponent previousTask = (TaskComponent) taskComponentPanel.getComponent(
+                        taskComponentPanel.getComponentCount() - 2);
+                previousTask.getTaskField().setBackground(null);
+            }
+        }else if(command.equalsIgnoreCase("Add Subtask")){
+            SubTaskComponent subtaskComponent = new SubTaskComponent(subTaskComponentPanel);
+            subTaskComponentPanel.add(subtaskComponent);
+            if(subTaskComponentPanel.getComponentCount() > 1){
+                SubTaskComponent previousTask = (SubTaskComponent) subTaskComponentPanel.getComponent(
+                        subTaskComponentPanel.getComponentCount() - 2);
+                previousTask.getSubTaskField().setBackground(null);
+            }
+        }
+    }
+        
     /**
      * @param args the command line arguments
      */
@@ -174,12 +307,12 @@ public class TodolistView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addSubTaskButton;
+    private javax.swing.JButton addTaskButton;
     private javax.swing.JButton btVoltar;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }
