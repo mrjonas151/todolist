@@ -6,9 +6,19 @@ public class TarefaModel {
     private boolean concluida;
     private String user_email;
     private int list_id;
+    private String data;
 
-    public TarefaModel(String descricao) {
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String data) {
+        this.data = data;
+    }
+
+    public TarefaModel(String descricao, String data) {
         this.descricao = descricao;
+        this.data = data;
         this.concluida = false;
     }
     

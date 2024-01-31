@@ -8,8 +8,8 @@ import java.util.List;
 
 public class TodolistController {
     
-    public static boolean criarTarefa(String descricao, String email){
-        TodolistModel tarefa = new TodolistModel(descricao);
+    public static boolean criarTarefa(String descricao, String data, String email){
+        TodolistModel tarefa = new TodolistModel(descricao, data);
         
         if(TodolistDAO.criarTarefa(tarefa, email)){
             return true;
@@ -18,8 +18,8 @@ public class TodolistController {
         }
     }
     
-    public static boolean criarSubTarefa(String descricao, String email){
-        TarefaModel tarefa = new TarefaModel(descricao);
+    public static boolean criarSubTarefa(String descricao, String data, String email){
+        TarefaModel tarefa = new TarefaModel(descricao, data);
         
         if(TodolistDAO.criarSubTarefa(tarefa, email)){
             return true;

@@ -157,12 +157,15 @@ public class SubtaskcreateView extends javax.swing.JFrame {
 
     private void btVoltarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btVoltarMouseClicked
         this.setVisible(false);
-        new TaskcreateView().setVisible(true);
+        new TodolistView().setVisible(true);
     }//GEN-LAST:event_btVoltarMouseClicked
 
     private void btCriarTarefaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btCriarTarefaMouseClicked
-        if(TodolistController.criarSubTarefa(txtDescricao.getText(), UserloginView.getEmailLogado())){
+        if(TodolistController.criarSubTarefa(txtDescricao.getText(), txtData.getText(), UserloginView.getEmailLogado())){
             JOptionPane.showMessageDialog(null, "Tarefa criada com sucesso!");
+            new TodolistView().setVisible(true);
+            this.setVisible(false);
+            
         }else{
             JOptionPane.showMessageDialog(null, "Erro ao criar tarefa!");
         }

@@ -2,6 +2,7 @@ package com.v360.dao;
 
 import com.v360.model.TarefaModel;
 import com.v360.model.TodolistModel;
+import com.v360.view.TaskComponent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,13 +16,14 @@ public class TodolistDAO {
 
         Connection conn = ConexaoBD.getConnection();
 
-        String query = "INSERT INTO lists VALUES (null, ?, ?)";
+        String query = "INSERT INTO lists VALUES (null, ?, ?, ?)";
         PreparedStatement pstm;
 
         try {
             pstm = conn.prepareStatement(query);
             pstm.setString(1, email);
             pstm.setString(2, tarefa.getListName());
+            pstm.setString(3, tarefa.getData());
     
             pstm.execute();
             pstm.close();
@@ -29,7 +31,7 @@ public class TodolistDAO {
             return true;
 
         } catch (SQLException erro) {
-            System.out.println("ERRO DAO " + erro);
+            System.out.println("ERRO DAO criar tarefa " + erro);
             }
         
         return false;
@@ -38,14 +40,15 @@ public class TodolistDAO {
     public static boolean criarSubTarefa(TarefaModel tarefa, String email){
         Connection conn = ConexaoBD.getConnection();
 
-        String query = "INSERT INTO items VALUES (null, ?, ?, ?, null)";
+        String query = "INSERT INTO items VALUES (null, ?, ?, ?, null, ?)";
         PreparedStatement pstm;
 
         try {
             pstm = conn.prepareStatement(query);
             pstm.setString(1, email);
-            pstm.setInt(2, tarefa.getList_id());
+            pstm.setInt(2, TaskComponent.getCodigoTaskPrincipal());
             pstm.setString(3, tarefa.getDescricao());
+            pstm.setString(4, tarefa.getData());
     
             pstm.execute();
             pstm.close();
@@ -53,7 +56,7 @@ public class TodolistDAO {
             return true;
 
         } catch (SQLException erro) {
-            System.out.println("ERRO DAO " + erro);
+            System.out.println("ERRO DAO criar subtarefa " + erro);
             }
         
         return false;
@@ -77,12 +80,13 @@ public class TodolistDAO {
                 tarefa.setListId(rs.getInt("list_id"));
                 tarefa.setUserEmail(email);
                 tarefa.setListName(rs.getString("list_name"));
+                tarefa.setData(rs.getString("date_task"));
 
                 listaToDo.add(tarefa);
             }
 
         } catch (SQLException erro) {
-            System.out.println("ERRO DAO " + erro);
+            System.out.println("ERRO DAO pesquisar tarefas " + erro);
         }
 
         return listaToDo;
@@ -90,7 +94,7 @@ public class TodolistDAO {
     
     public static List<TarefaModel> pesquisarSubTarefas(int list_id, String email) {
         Connection conn = ConexaoBD.getConnection();
-        String query = "SELECT * FROM lists WHERE list_id = ?";
+        String query = "SELECT * FROM items WHERE list_id = ?";
         PreparedStatement pstm;
         ResultSet rs;
 
@@ -104,15 +108,17 @@ public class TodolistDAO {
             while (rs.next()) {
                 TarefaModel tarefa = new TarefaModel();
                 tarefa.setId(rs.getInt("item_id"));
+                tarefa.setDescricao(rs.getString("item_description"));
                 tarefa.setUser_email(email);
                 tarefa.setList_id(rs.getInt("list_id"));
                 tarefa.setConcluida(false);
+                tarefa.setData(rs.getString("date_subtask"));
 
                 listaSubTarefas.add(tarefa);
             }
 
         } catch (SQLException erro) {
-            System.out.println("ERRO DAO " + erro);
+            System.out.println("ERRO DAO pesquisar subtarefas" + erro);
         }
 
         return listaSubTarefas;
@@ -167,7 +173,7 @@ public class TodolistDAO {
         return rowsAffected > 0;
 
     } catch (SQLException erro) {
-        System.out.println("ERRO DAO " + erro);
+        System.out.println("ERRO DAO remover tarefa " + erro);
 
         try {
             conn.rollback();
@@ -197,7 +203,7 @@ public class TodolistDAO {
             return rowsAffected > 0;
 
         } catch (SQLException erro) {
-            System.out.println("ERRO DAO " + erro);
+            System.out.println("ERRO DAO remover subtarefa " + erro);
         }
 
         return false;

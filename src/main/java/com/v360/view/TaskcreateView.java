@@ -159,8 +159,10 @@ public class TaskcreateView extends javax.swing.JFrame {
     }//GEN-LAST:event_btVoltarMouseClicked
 
     private void btCriarTarefaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btCriarTarefaMouseClicked
-        if(TodolistController.criarTarefa(txtDescricao.getText(), UserloginView.getEmailLogado())){
+        if(TodolistController.criarTarefa(txtDescricao.getText(), txtData.getText(), UserloginView.getEmailLogado())){
             JOptionPane.showMessageDialog(null, "Tarefa criada com sucesso!");
+            this.setVisible(false);
+            new TodolistView().setVisible(true);
         }else{
             JOptionPane.showMessageDialog(null, "Erro ao criar tarefa!");
         }

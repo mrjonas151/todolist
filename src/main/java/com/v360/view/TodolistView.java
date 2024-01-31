@@ -9,6 +9,7 @@ import com.v360.dao.TodolistDAO;
 import com.v360.model.TarefaModel;
 import com.v360.model.TodolistModel;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +31,14 @@ public final class TodolistView extends javax.swing.JFrame {
     List<TodolistModel> tarefas = new ArrayList();
     private JPanel taskPanel, taskComponentPanel ,subTaskPanel, subTaskComponentPanel;
     
+    public List<TodolistModel> getTarefas() {
+        return tarefas;
+    }
+
+    public void setTarefas(List<TodolistModel> tarefas) {
+        this.tarefas = tarefas;
+    }
+    
     /**
      * Creates new form UsercadastroView
      */
@@ -49,6 +58,9 @@ public final class TodolistView extends javax.swing.JFrame {
 
         addGuiComponents();
         initComponents();
+        
+        atualizarTarefas(UserloginView.getEmailLogado());
+        exibirTarefas(tarefas);
     }
     
     public void addGuiComponents() {
@@ -104,8 +116,6 @@ public final class TodolistView extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         btVoltar = new javax.swing.JButton();
         btAtualizarTarefas = new javax.swing.JButton();
-        addTaskButton = new javax.swing.JButton();
-        addSubTaskButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -149,20 +159,6 @@ public final class TodolistView extends javax.swing.JFrame {
             }
         });
 
-        addTaskButton.setText("Add Task");
-        addTaskButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addTaskButtonActionPerformed(evt);
-            }
-        });
-
-        addSubTaskButton.setText("Add Subtask");
-        addSubTaskButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addSubTaskButtonActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -170,38 +166,29 @@ public final class TodolistView extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(49, 49, 49)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
-                .addComponent(addTaskButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 109, Short.MAX_VALUE)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(48, 48, 48))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btAtualizarTarefas, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(addSubTaskButton)
-                .addGap(119, 119, 119))
+                .addComponent(btAtualizarTarefas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(btVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(3, 3, 3))))
-                    .addComponent(addTaskButton))
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(3, 3, 3)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 472, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btAtualizarTarefas, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(addSubTaskButton))
+                .addComponent(btAtualizarTarefas, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -231,45 +218,16 @@ public final class TodolistView extends javax.swing.JFrame {
         new TaskcreateView().setVisible(true);
     }//GEN-LAST:event_jButton1MouseClicked
 
-    private void addTaskButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTaskButtonActionPerformed
-        // create a task component
-//        TaskComponent taskComponent = new TaskComponent(taskComponentPanel);
-//        taskComponentPanel.add(taskComponent);
-//
-//        // make the previous task appear disabled
-//        if (taskComponentPanel.getComponentCount() > 1) {
-//            TaskComponent previousTask = (TaskComponent) taskComponentPanel.getComponent(
-//                    taskComponentPanel.getComponentCount() - 2);
-//            previousTask.getTaskField().setBackground(null);
-//        }
-//
-//        taskComponent.getTaskField().requestFocus();
-//        repaint();
-//        revalidate();
-    }//GEN-LAST:event_addTaskButtonActionPerformed
-
-    private void addSubTaskButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSubTaskButtonActionPerformed
-//        //create a task component
-//        SubTaskComponent subtaskComponent = new SubTaskComponent(subTaskComponentPanel);
-//        subTaskComponentPanel.add(subtaskComponent);
-//
-//        // make the previous task appear disabled
-//        if (subTaskComponentPanel.getComponentCount() > 1) {
-//            SubTaskComponent previousTask = (SubTaskComponent) subTaskComponentPanel.getComponent(
-//                    subTaskComponentPanel.getComponentCount() - 2);
-//            previousTask.getSubTaskField().setBackground(null);
-//        }
-//        subtaskComponent.getSubTaskField().requestFocus();
-//        repaint();
-//        revalidate();
-    }//GEN-LAST:event_addSubTaskButtonActionPerformed
-
-    private void exibirTarefas(List<TodolistModel> tarefas) {
+    
+    
+    
+    public void exibirTarefas(List<TodolistModel> tarefas) {
         taskComponentPanel.removeAll(); // Limpa todos os componentes existentes no painel
+        subTaskComponentPanel.removeAll();
 
         if (tarefas != null) {
             for (TodolistModel tarefa : tarefas) {
-                String descricao = tarefa.getListName();
+                String descricao = "(" + tarefa.getListId() + ") " + tarefa.getListName() + "   [" +tarefa.getData()+"]";
                 TaskComponent taskComponent = new TaskComponent(taskComponentPanel, descricao);
                 taskComponentPanel.add(taskComponent);
 
@@ -280,7 +238,7 @@ public final class TodolistView extends javax.swing.JFrame {
                 List<TarefaModel> subtarefas = TodolistDAO.pesquisarSubTarefas(tarefa.getListId(), UserloginView.getEmailLogado());
                 if (subtarefas != null) {
                     for (TarefaModel subtarefa : subtarefas) {
-                        String descricaoSub = subtarefa.getDescricao();
+                        String descricaoSub = "(" + subtarefa.getList_id() + ")" + "(" + subtarefa.getId() + ") " + subtarefa.getDescricao() +"   [" + subtarefa.getData() + "]";
                         SubTaskComponent subtaskComponent = new SubTaskComponent(subTaskComponentPanel, descricaoSub);
                         subTaskComponentPanel.add(subtaskComponent);
 
@@ -300,6 +258,12 @@ public final class TodolistView extends javax.swing.JFrame {
         exibirTarefas(tarefas);
     }//GEN-LAST:event_btAtualizarTarefasMouseClicked
 
+    public void atualizarTarefasSemMouse(List<TodolistModel> listaTarefas){
+        tarefas = null;
+        tarefas = TodolistController.pesquisarListas(UserloginView.getEmailLogado());
+        exibirTarefas(listaTarefas);
+    }
+    
     private void btAtualizarTarefasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAtualizarTarefasActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btAtualizarTarefasActionPerformed
@@ -382,8 +346,6 @@ public final class TodolistView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton addSubTaskButton;
-    private javax.swing.JButton addTaskButton;
     private javax.swing.JButton btAtualizarTarefas;
     private javax.swing.JButton btVoltar;
     private javax.swing.JButton jButton1;
