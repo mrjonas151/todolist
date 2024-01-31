@@ -47,36 +47,75 @@ public final class TodolistView extends javax.swing.JFrame {
         initComponents();
     }
     
-    public void addGuiComponents(){
+//    public void addGuiComponents(){
+//    // taskpanel
+//        taskPanel = new JPanel();
+//        subTaskPanel = new JPanel();
+//
+//        // taskcomponentpanel
+//        taskComponentPanel = new JPanel();
+//        taskComponentPanel.setLayout(new BoxLayout(taskComponentPanel, BoxLayout.Y_AXIS));
+//        taskPanel.add(taskComponentPanel);
+//        
+//        //subtask componentpanel
+//        subTaskComponentPanel = new JPanel();
+//        subTaskComponentPanel.setLayout(new BoxLayout(subTaskComponentPanel, BoxLayout.Y_AXIS));
+//        taskPanel.add(subTaskComponentPanel);
+//
+//        // add scrolling to the task panel
+//        JScrollPane scrollPane = new JScrollPane(taskPanel);
+//        scrollPane.setBounds(8, 70, CommonConstants.TASKPANEL_SIZE.width, CommonConstants.TASKPANEL_SIZE.height);
+//        scrollPane.setBorder(BorderFactory.createLoweredBevelBorder());
+//        scrollPane.setMaximumSize(CommonConstants.TASKPANEL_SIZE);
+//        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+//        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+//
+//        // changing the speed of the scroll bar
+//        JScrollBar verticalScrollBar = scrollPane.getVerticalScrollBar();
+//        verticalScrollBar.setUnitIncrement(20);
+//        
+//        this.getContentPane().add(scrollPane);
+//        //addTaskButton.addActionListener(this);
+//    }
+    
+    public void addGuiComponents() {
     // taskpanel
-        taskPanel = new JPanel();
-        subTaskPanel = new JPanel();
+    taskPanel = new JPanel();
+    subTaskPanel = new JPanel();
 
-        // taskcomponentpanel
-        taskComponentPanel = new JPanel();
-        taskComponentPanel.setLayout(new BoxLayout(taskComponentPanel, BoxLayout.Y_AXIS));
-        taskPanel.add(taskComponentPanel);
-        
-        //subtask componentpanel
-        subTaskComponentPanel = new JPanel();
-        subTaskComponentPanel.setLayout(new BoxLayout(subTaskComponentPanel, BoxLayout.Y_AXIS));
-        subTaskPanel.add(subTaskComponentPanel);
+    // Novo painel para conter taskComponentPanel e subTaskComponentPanel
+    JPanel mainPanel = new JPanel();
+    mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 
-        // add scrolling to the task panel
-        JScrollPane scrollPane = new JScrollPane(taskPanel);
-        scrollPane.setBounds(8, 70, CommonConstants.TASKPANEL_SIZE.width, CommonConstants.TASKPANEL_SIZE.height);
-        scrollPane.setBorder(BorderFactory.createLoweredBevelBorder());
-        scrollPane.setMaximumSize(CommonConstants.TASKPANEL_SIZE);
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+    // taskcomponentpanel
+    taskComponentPanel = new JPanel();
+    taskComponentPanel.setLayout(new BoxLayout(taskComponentPanel, BoxLayout.Y_AXIS));
+    taskPanel.add(taskComponentPanel);
 
-        // changing the speed of the scroll bar
-        JScrollBar verticalScrollBar = scrollPane.getVerticalScrollBar();
-        verticalScrollBar.setUnitIncrement(20);
-        
-        this.getContentPane().add(scrollPane);
-        //addTaskButton.addActionListener(this);
-    }
+    //subtask componentpanel
+    subTaskComponentPanel = new JPanel();
+    subTaskComponentPanel.setLayout(new BoxLayout(subTaskComponentPanel, BoxLayout.Y_AXIS));
+    subTaskPanel.add(subTaskComponentPanel);
+
+    // Adiciona taskPanel e subTaskPanel ao novo painel
+    mainPanel.add(taskPanel);
+    mainPanel.add(subTaskPanel);
+
+    // add scrolling to the task panel
+    JScrollPane scrollPane = new JScrollPane(mainPanel);
+    scrollPane.setBounds(8, 70, CommonConstants.TASKPANEL_SIZE.width, CommonConstants.TASKPANEL_SIZE.height);
+    scrollPane.setBorder(BorderFactory.createLoweredBevelBorder());
+    scrollPane.setMaximumSize(CommonConstants.TASKPANEL_SIZE);
+    scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+    scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+
+    // changing the speed of the scroll bar
+    JScrollBar verticalScrollBar = scrollPane.getVerticalScrollBar();
+    verticalScrollBar.setUnitIncrement(20);
+
+    this.getContentPane().add(scrollPane);
+}
+
 
     
 
