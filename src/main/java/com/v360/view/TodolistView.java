@@ -200,14 +200,14 @@ public final class TodolistView extends javax.swing.JFrame {
 
         if (tarefas != null) {
             for (TodolistModel tarefa : tarefas) {
-                String descricao = "(" + tarefa.getListId() + ") " + tarefa.getListName() + "   [" +tarefa.getData()+"]";
+                String descricao = "(TASK " + tarefa.getListId() + ") " + tarefa.getListName() + "   [" +tarefa.getData()+"]";
                 TaskComponent taskComponent = new TaskComponent(taskComponentPanel, descricao);
                 taskComponentPanel.add(taskComponent);
 
                 List<TarefaModel> subtarefas = TodolistDAO.pesquisarSubTarefas(tarefa.getListId(), UserloginView.getEmailLogado());
                 if (subtarefas != null) {
                     for (TarefaModel subtarefa : subtarefas) {
-                        String descricaoSub = "(" + subtarefa.getList_id() + ")" + "(" + subtarefa.getId() + ") " + subtarefa.getDescricao() +"   [" + subtarefa.getData() + "]";
+                        String descricaoSub = "(TASK " + subtarefa.getList_id() + ")" + "(" + subtarefa.getId() + ") " + subtarefa.getDescricao() +"   [" + subtarefa.getData() + "]";
                         SubTaskComponent subtaskComponent = new SubTaskComponent(subTaskComponentPanel, descricaoSub);
                         subTaskComponentPanel.add(subtaskComponent);
                     }
