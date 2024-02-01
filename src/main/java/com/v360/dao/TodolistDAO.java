@@ -124,28 +124,6 @@ public class TodolistDAO {
         return listaSubTarefas;
     }
     
-//    public static boolean removerTarefa(int list_id, String email) {
-//        Connection conn = ConexaoBD.getConnection();
-//        String query = "DELETE FROM lists WHERE list_id = ? AND email = ?";
-//        PreparedStatement pstm;
-//
-//        try {
-//            pstm = conn.prepareStatement(query);
-//            pstm.setInt(1, list_id);
-//            pstm.setString(2, email);
-//
-//            int rowsAffected = pstm.executeUpdate();
-//            pstm.close();
-//
-//            return rowsAffected > 0;
-//
-//        } catch (SQLException erro) {
-//            System.out.println("ERRO DAO " + erro);
-//        }
-//
-//        return false;
-//    }   
-    
     public static boolean removerTarefa(int list_id, String email) {
     Connection conn = ConexaoBD.getConnection();
     String deleteItemsQuery = "DELETE FROM items WHERE list_id = ?";

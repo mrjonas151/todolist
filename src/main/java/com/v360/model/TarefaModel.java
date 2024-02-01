@@ -69,7 +69,5 @@ public class TarefaModel {
 
     public void setList_id(int list_id) {
         this.list_id = list_id;
-    }
-    
-    
+    } 
 }

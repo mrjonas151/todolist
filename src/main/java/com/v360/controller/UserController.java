@@ -27,10 +27,10 @@ public class UserController {
     }
     
     public static boolean logarUsuario(String email, String password) {
-    if (UserDAO.logarUsuarioBD(email, password)) {
-        return true;
-    } else {
-        return false;
+        if (UserDAO.logarUsuarioBD(email, password)) {
+            return true;
+        } else {
+            return false;
+        }
     }
-}
 }

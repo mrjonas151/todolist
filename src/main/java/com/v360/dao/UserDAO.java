@@ -58,7 +58,7 @@ public class UserDAO {
         ResultSet rs = pstm.executeQuery();
         return rs.next();
     } catch (SQLException erro) {
-        erro.printStackTrace();  // Adicionando esta linha para imprimir a stack trace
+        erro.printStackTrace();
         System.out.println("ERRO DAO " + erro);
     }
 
