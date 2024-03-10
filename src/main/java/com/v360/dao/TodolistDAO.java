@@ -40,7 +40,7 @@ public class TodolistDAO {
     public static boolean criarSubTarefa(TarefaModel tarefa, String email){
         Connection conn = ConexaoBD.getConnection();
 
-        String query = "INSERT INTO items VALUES (null, ?, ?, ?, null, ?)";
+        String query = "INSERT INTO items VALUES (null, ?, ?, ?, ?)";
         PreparedStatement pstm;
 
         try {
