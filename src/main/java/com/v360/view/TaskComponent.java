@@ -85,23 +85,6 @@ public class TaskComponent extends JPanel implements ActionListener {
             taskField.setText(taskText);
         }
 
-//        if (e.getActionCommand().equalsIgnoreCase("X")) {
-//            String taskText = taskField.getText();
-//
-//            java.util.regex.Pattern pattern = java.util.regex.Pattern.compile("\\((\\d+)\\)");
-//            java.util.regex.Matcher matcher = pattern.matcher(taskText);
-//
-//            if (matcher.find()) {
-//                String codigo = matcher.group(1);
-//                int numero = Integer.parseInt(codigo);
-//                System.out.println("Número: " + numero);
-//
-//                TodolistController.removerTarefa(numero, UserloginView.getEmailLogado());
-//
-//                removerTarefaVisualmente(this, parentPanel, numero);
-//            }
-//        }
-        
         if (e.getActionCommand().equalsIgnoreCase("X")) {
             String taskText = taskField.getText();
             
@@ -118,32 +101,6 @@ public class TaskComponent extends JPanel implements ActionListener {
                 removerTarefaVisualmente(this, parentPanel, numero);
             }
         }
-
-
-//        if (e.getActionCommand().equalsIgnoreCase("+")) {
-//            String taskText = taskField.getText();
-//
-//            java.util.regex.Pattern pattern = java.util.regex.Pattern.compile("\\((\\d+)\\)");
-//            java.util.regex.Matcher matcher = pattern.matcher(taskText);
-//
-//            if (matcher.find()) {
-//                String codigo = matcher.group(1);
-//                int numero = Integer.parseInt(codigo);
-//                System.out.println("Número: " + numero);
-//                codigoTaskPrincipal = numero;
-//                
-//                Container parentContainer = getParent();
-//
-//
-//                TodolistView todolistView = findTodolistViewAncestor(this);
-//
-//                if (todolistView != null) {
-//                    todolistView.setVisible(false);
-//                    new SubtaskcreateView().setVisible(true);
-//                }
-//            }
-//    
-//        }
 
         if (e.getActionCommand().equalsIgnoreCase("+")) {
             String taskText = taskField.getText();
