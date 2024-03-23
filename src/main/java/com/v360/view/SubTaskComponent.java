@@ -55,44 +55,6 @@ public class SubTaskComponent extends JPanel implements ActionListener {
         add(deleteButton);
     
     }
-
-//    @Override
-//    public void actionPerformed(ActionEvent e) {
-//        if(checkBox.isSelected()){
-//            String taskText = subtaskField.getText().replaceAll("<[^>]*>", "");
-//
-//            subtaskField.setText("<html><s>"+ taskText + "</s></html>");
-//        }else if(!checkBox.isSelected()){
-//            String taskText = subtaskField.getText().replaceAll("<[^>]*>", "");
-//
-//            subtaskField.setText(taskText);
-//        }
-//
-//        if (e.getActionCommand().equalsIgnoreCase("X")) {
-//        String taskText = subtaskField.getText();
-//
-//        java.util.regex.Pattern pattern = java.util.regex.Pattern.compile("\\((\\d+)\\)\\((\\d+)\\)");
-//        java.util.regex.Matcher matcher = pattern.matcher(taskText);
-//
-//        if (matcher.find()) {
-//            String codigo1 = matcher.group(1);
-//            String codigo2 = matcher.group(2);
-//
-//            int numero1 = Integer.parseInt(codigo1);
-//            int numero2 = Integer.parseInt(codigo2);
-//
-//            System.out.println("Número 1: " + numero1);
-//            System.out.println("Número 2: " + numero2);
-//            
-//            TodolistController.removerSubTarefa(numero1, numero2, UserloginView.getEmailLogado());
-//
-//        }
-//            parentPanel.remove(this);
-//            parentPanel.repaint();
-//            parentPanel.revalidate();
-//        }
-//
-//    }
         
     @Override
     public void actionPerformed(ActionEvent e) {
